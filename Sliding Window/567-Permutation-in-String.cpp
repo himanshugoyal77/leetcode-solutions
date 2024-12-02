@@ -1,55 +1,39 @@
 class Solution {
 public:
-bool compare(map<char, int> mp1, map<char, int> mp2){
-        if(mp1.size() != mp2.size()) return false;
-        
-        for(auto it: mp1){
-            if(mp2.find(it.first) != mp2.end()){
-                if(mp2[it.first] != it.second){
-                    return false;
-                }
-            }else{
-                return false;
-            }
-        }
+    bool checkInclusion(string s1, string s2) {
+        map<int, int> mp;
+        int n = s1.size();
 
-        return true;
-    }
-    bool findAnagrams(string s, string p) {
-        int n = s.size(), m = p.size();
-
-        map<char, int> mp1, mp2;
-        vector<int> ans;
-
-        for(int i=0; i<m; i++){
-            mp1[p[i]]++;
+        for(char ch: s1){
+            mp[ch]++;
         }
 
         int i=0;
-        for(int j=0; j<n; j++){
-            mp2[s[j]]++;
+        map<int, int> copy = mp;
 
-            if(j-i+1 > m){
-                if(mp2.find(s[i]) != mp2.end()){
-                    mp2[s[i]]--;
-                    if(mp2[s[i]] == 0){
-                        mp2.erase(s[i]);
-                    }
-                }
-                i++;
+        for(int j=0; j<s2.size(); j++){
+            if(mp.find(s2[j]) != mp.end()){
+                mp[s2[j]]--;
             }
 
-            if(j-i+1 == m){
-                // compare mp1 and mp2
-                if(compare(mp1, mp2)){
-                    return true;
+            if(j-i+1 > n){
+               if(copy.find(s2[i]) != copy.end()){
+                mp[s2[i]]++;
+               } 
+               i++;
+            }
+
+            bool flag = true;
+            for(auto it: mp){
+                if(it.second != 0){
+                    flag = false;
+                    break;
                 }
             }
+
+            if(flag) return true;
         }
 
         return false;
-    }
-    bool checkInclusion(string s1, string s2) {
-        return findAnagrams(s2, s1);
     }
 };
