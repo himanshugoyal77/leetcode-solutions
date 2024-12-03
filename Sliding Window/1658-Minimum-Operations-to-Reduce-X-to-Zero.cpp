@@ -26,7 +26,7 @@ public:
            // cout<<"sum above while"<<sum<<endl;
             if(sum == x){
                 res = min(res, moves);
-                cout<<"Res inside while "<<res<<endl;
+                // cout<<"Res inside while "<<res<<endl;
             }
             while(k >= 0 && i>k && sum >= x){
                 sum -= nums[k];
